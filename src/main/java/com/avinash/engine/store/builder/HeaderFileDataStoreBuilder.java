@@ -21,7 +21,8 @@ public class HeaderFileDataStoreBuilder implements IDataStoreBuilder {
         Map<String,Integer> storeindex = new HashMap<String, Integer>();
         List<String> columnNames = new ArrayList<String>();
         List<Boolean> isKey= new ArrayList<Boolean>();
-        List<String> dataType= new ArrayList<String>();
+        List<String> dataType= new ArrayList<>();
+        List<Boolean> isNullable= new ArrayList<>();
         try {
             File file = new File(headerFile);
             if (file.exists()) {
@@ -38,6 +39,8 @@ public class HeaderFileDataStoreBuilder implements IDataStoreBuilder {
                             isKey.add(Boolean.parseBoolean(contentTrim));
                         }else if(lineNumber==2){
                             dataType.add(contentTrim);
+                        }else if(lineNumber==3){
+                            isNullable.add(Boolean.parseBoolean(contentTrim));
                         }
                     }
                 }
@@ -49,7 +52,7 @@ public class HeaderFileDataStoreBuilder implements IDataStoreBuilder {
             throw new IllegalArgumentException("File:"+headerFile+" has a problem. Exception:"+e);
         }
 
-        return new DataStore(storeindex, (String[])columnNames.toArray(), (Boolean[])isKey.toArray(),(String[])dataType.toArray());
+        return new DataStore(storeindex, (String[])columnNames.toArray(), (Boolean[])isKey.toArray(),(String[])dataType.toArray(),(Boolean[])isNullable.toArray());
     }
 
 }

@@ -9,12 +9,14 @@ public class DataStore {
     private final String[] columnNames;
     private final Boolean[] isKey;
     private final String[] dataType;
+    private final Boolean[] isNullable;
 
-    public DataStore(Map<String,Integer> storeindex,String[] columnNames,Boolean[] isKey,String[] dataType){//String headerFile
+    public DataStore(Map<String,Integer> storeindex,String[] columnNames,Boolean[] isKey,String[] dataType,Boolean[] isNullable){
         this.storeindex = Collections.unmodifiableMap(storeindex);
         this.columnNames=columnNames;
         this.isKey = isKey;
         this.dataType=dataType;
+        this.isNullable=isNullable;
     }
 
     public Boolean isKey(String column){
@@ -38,6 +40,12 @@ public class DataStore {
         return null;
     }
 
+    public Boolean isNullable(String column){
+        if(storeindex.containsKey(column.trim().toLowerCase())){
+            return isNullable[storeindex.get(column.trim().toLowerCase())];
+        }
+        return null;
+    }
     public Set<String> getColumns(){
         return storeindex.keySet();
     }
