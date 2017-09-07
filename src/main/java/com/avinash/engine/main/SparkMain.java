@@ -6,23 +6,26 @@ import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.StructType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
-@Configuration
+@SpringBootApplication
 @Import({DataStoreConfig.class,SparkConfig.class})
-public class SparkMain{
+public class SparkMain implements CommandLineRunner {
 
     @Autowired
-    private static SparkSession sparkSession;
+    private SparkSession sparkSession;
 
     @Autowired
-    private static StructType mainstoreType;
+    private StructType mainstoreType;
 
-    @Value("csv.schema.file.loc")
-    private static String filelocation;
+    @Value("${csv.schema.file.loc}")
+    private String filelocation;
 
-    public static void testSpark(){
+    @Override
+    public void run(String... strings) throws Exception {
         long count = sparkSession.read().option("header","true")
                 .schema(mainstoreType)
                 .csv(filelocation)
@@ -30,8 +33,8 @@ public class SparkMain{
         System.out.println("Count:"+count);
     }
 
-    public static void main(String[] args){
-        testSpark();
+    public static void main(String[] args) throws Exception {
+        SpringApplication.run(SparkMain.class, args);
     }
 
 }

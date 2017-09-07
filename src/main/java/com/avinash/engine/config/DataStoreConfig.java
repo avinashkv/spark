@@ -13,7 +13,7 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource("classpath:engine.properties")
 public class DataStoreConfig {
 
-    @Value("csv.schema.header.path")
+    @Value("${csv.schema.header.path}")
     private String header;
 
     @Bean

@@ -12,22 +12,26 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource("classpath:engine.properties")
 public class SparkConfig {
 
-    @Value("engine.spark.engine.name")
+    @Value("${engine.spark.engine.name}")
     private String engineName;
 
-    @Value("engine.spark.engine.master.url")
+    @Value("${engine.spark.engine.master.url}")
     private String masterURL;
 
     @Bean
+    public SparkConf sparkConf(){
+        return new SparkConf().setAppName(engineName).setMaster(masterURL);
+    }
+
+    @Bean
     public JavaSparkContext javaSparkContext(){
-        SparkConf conf = new SparkConf().setAppName(engineName).setMaster(masterURL);
-        return new JavaSparkContext(conf);
+        return new JavaSparkContext(sparkConf());
     }
 
     @Bean
     public SparkSession sparkSession(){
         return  SparkSession.builder()
-                .appName(engineName)
+                .config(sparkConf())
                 .getOrCreate();
     }
 
