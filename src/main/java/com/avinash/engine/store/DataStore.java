@@ -2,7 +2,6 @@ package com.avinash.engine.store;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.Set;
 
 public class DataStore {
     private final Map<String,Integer> storeindex;
@@ -46,7 +45,7 @@ public class DataStore {
         }
         return null;
     }
-    public Set<String> getColumns(){
-        return storeindex.keySet();
+    public String[] getColumns(){
+        return columnNames.clone();
     }
 }

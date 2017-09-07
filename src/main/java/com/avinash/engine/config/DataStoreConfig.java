@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
+import java.util.Arrays;
+
 @Configuration
 @PropertySource("classpath:engine.properties")
 public class DataStoreConfig {
@@ -30,7 +32,7 @@ public class DataStoreConfig {
     @Bean
     public StructType mainstoreType(){
         StructType schema = new StructType();
-        datastore().getColumns().stream().forEach(col -> {
+        Arrays.stream(datastore().getColumns()).forEach(col -> {
             schema.add(col, DataTypeFactory.getType(datastore().getDataType(col)),datastore().isNullable(col));
         });
         return schema;
