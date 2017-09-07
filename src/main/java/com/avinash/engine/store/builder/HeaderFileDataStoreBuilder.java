@@ -36,13 +36,14 @@ public class HeaderFileDataStoreBuilder implements IDataStoreBuilder {
                             storeindex.put(contentTrim,i);
                             columnNames.add(contentTrim);
                         }else if(lineNumber==1){
-                            isKey.add(Boolean.parseBoolean(contentTrim));
-                        }else if(lineNumber==2){
                             dataType.add(contentTrim);
+                        }else if(lineNumber==2){
+                            isKey.add(Boolean.parseBoolean(contentTrim));
                         }else if(lineNumber==3){
                             isNullable.add(Boolean.parseBoolean(contentTrim));
                         }
                     }
+                    lineNumber++;
                 }
 
             } else {
@@ -52,7 +53,10 @@ public class HeaderFileDataStoreBuilder implements IDataStoreBuilder {
             throw new IllegalArgumentException("File:"+headerFile+" has a problem. Exception:"+e);
         }
 
-        return new DataStore(storeindex, (String[])columnNames.toArray(), (Boolean[])isKey.toArray(),(String[])dataType.toArray(),(Boolean[])isNullable.toArray());
+        return new DataStore(storeindex, columnNames.stream().toArray(String[]::new)
+                ,isKey.stream().toArray(Boolean[]::new)
+                ,dataType.stream().toArray(String[]::new)
+                ,isNullable.stream().toArray(Boolean[]::new));
     }
 
 }

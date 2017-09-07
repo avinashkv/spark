@@ -3,6 +3,7 @@ package com.avinash.engine.config;
 import com.avinash.engine.store.DataStore;
 import com.avinash.engine.store.builder.HeaderFileDataStoreBuilder;
 import com.avinash.engine.store.builder.IDataStoreBuilder;
+import com.avinash.engine.util.DataTypeFactory;
 import org.apache.spark.sql.types.StructType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -30,7 +31,7 @@ public class DataStoreConfig {
     public StructType mainstoreType(){
         StructType schema = new StructType();
         datastore().getColumns().stream().forEach(col -> {
-            schema.add(col,datastore().getDataType(col),datastore().isNullable(col));
+            schema.add(col, DataTypeFactory.getType(datastore().getDataType(col)),datastore().isNullable(col));
         });
         return schema;
     }

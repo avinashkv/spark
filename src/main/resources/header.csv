@@ -1,4 +1,4 @@
 eod_date,trader,fund,broker,instrument,strategy,fwd_date,riskfactor,exposure,pnl
-date(yyyy-MM-dd),int,int,int,int,int,int,int,double,double[]
+date,int,int,int,int,int,int,int,double,double[]
 true,true,true,true,true,true,true,true,false,false
 true,true,true,true,true,true,true,true,false,false

@@ -23,10 +23,10 @@ public class SparkConfig {
         return new SparkConf().setAppName(engineName).setMaster(masterURL);
     }
 
-    @Bean
-    public JavaSparkContext javaSparkContext(){
-        return new JavaSparkContext(sparkConf());
-    }
+//    @Bean
+//    public JavaSparkContext javaSparkContext(){
+//        return new JavaSparkContext(sparkConf());
+//    }
 
     @Bean
     public SparkSession sparkSession(){
