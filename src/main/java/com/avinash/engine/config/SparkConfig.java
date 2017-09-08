@@ -1,7 +1,6 @@
 package com.avinash.engine.config;
 
 import org.apache.spark.SparkConf;
-import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.SparkSession;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -22,11 +21,6 @@ public class SparkConfig {
     public SparkConf sparkConf(){
         return new SparkConf().setAppName(engineName).setMaster(masterURL);
     }
-
-//    @Bean
-//    public JavaSparkContext javaSparkContext(){
-//        return new JavaSparkContext(sparkConf());
-//    }
 
     @Bean
     public SparkSession sparkSession(){
